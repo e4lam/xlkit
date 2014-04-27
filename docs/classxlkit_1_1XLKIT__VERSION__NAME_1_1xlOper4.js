@@ -22,7 +22,6 @@ var classxlkit_1_1XLKIT__VERSION__NAME_1_1xlOper4 =
     [ "get", "classxlkit_1_1XLKIT__VERSION__NAME_1_1xlOper4.html#a5d8a4a01d0bc7673086454677d0e087f", null ],
     [ "get", "classxlkit_1_1XLKIT__VERSION__NAME_1_1xlOper4.html#af55278863b41a2ba369db180232da1d0", null ],
     [ "get", "classxlkit_1_1XLKIT__VERSION__NAME_1_1xlOper4.html#a035338cff405e8077ad05a2e0b7520ac", null ],
-    [ "get", "classxlkit_1_1XLKIT__VERSION__NAME_1_1xlOper4.html#a800449048095c77a2e0bd3adb90f6941", null ],
     [ "get", "classxlkit_1_1XLKIT__VERSION__NAME_1_1xlOper4.html#a71847bd2d6623d4a5db481ffd3a78bb2", null ],
     [ "get", "classxlkit_1_1XLKIT__VERSION__NAME_1_1xlOper4.html#a81a0210f331d8ac272dfdf3c032f967b", null ],
     [ "get", "classxlkit_1_1XLKIT__VERSION__NAME_1_1xlOper4.html#a20a1bb0cf12c93e14e43ba51d417c3c4", null ],

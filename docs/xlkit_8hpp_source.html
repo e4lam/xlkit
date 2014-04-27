@@ -382,137 +382,138 @@ $(document).ready(function(){initNavTree('xlkit_8hpp_source.html','');});
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="keyword">static</span> Registry* theInstance;</div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;};</div>
 <div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;<span class="keywordtype">void</span> dumpRegistry() {</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <a class="code" href="classxlkit_1_1XLKIT__VERSION__NAME_1_1Registry.html#a7060c8869c147e22aa76e1912832cd31">Registry::instance</a>().<a class="code" href="classxlkit_1_1XLKIT__VERSION__NAME_1_1Registry.html#ac5d78aba42cb117b348791ba5f744118">dump</a>();</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;}</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="comment">// Specializations for function introspection</span></div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span> Curr, <span class="keyword">typename</span> End&gt;</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="keyword">struct </span>Registry::Func {</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    <span class="comment">// Type string signature</span></div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> getTypes(std::string&amp; types) {</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> mpl::next&lt;Curr&gt;::type Next;</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> mpl::deref&lt;Curr&gt;::type Type;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;        types += detail::TypeInfo&lt;Type&gt;::code();</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        Func&lt;F, Next, End&gt;::getTypes(types);</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    }</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    <span class="comment">// Names of the arguments</span></div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> getArgNames(std::string&amp; arg_names) {</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> mpl::next&lt;Curr&gt;::type Next;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> mpl::deref&lt;Curr&gt;::type Type;</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;        <span class="keywordflow">if</span> (arg_names.size() &gt; 0)</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;            arg_names += <span class="stringliteral">&quot;, &quot;</span>;</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;        arg_names += detail::TypeInfo&lt;Type&gt;::name();</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;        Func&lt;F, Next, End&gt;::getArgNames(arg_names);</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    }</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="comment">// Help description for individual arguments</span></div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> getParmHelp(std::vector&lt;std::string&gt;&amp; parm_help) {</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> mpl::next&lt;Curr&gt;::type Next;</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> mpl::deref&lt;Curr&gt;::type Type;</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        parm_help.push_back(detail::TypeInfo&lt;Type&gt;::help());</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        Func&lt;F, Next, End&gt;::getParmHelp(parm_help);</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    }</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;};</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span> End&gt;</div>
-<div class="line"><a name="l00338"></a><span class="lineno"><a class="line" href="structxlkit_1_1XLKIT__VERSION__NAME_1_1Registry_1_1Func_3_01F_00_01End_00_01End_01_4.html">  338</a></span>&#160;<span class="keyword">struct </span>Registry::Func&lt;F, End, End&gt; {</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> getTypes(std::string&amp;) { }</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> getArgNames(std::string&amp;) { }</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> getParmHelp(std::vector&lt;std::string&gt;&amp;) { }</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;};</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;} <span class="comment">// namespace XLKIT_VERSION_NAME</span></div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;} <span class="comment">// namespace xlkit</span></div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> PARM_HELP = xlkit::detail::empty_&gt;</div>
-<div class="line"><a name="l00354"></a><span class="lineno"><a class="line" href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">  354</a></span>&#160;<span class="keyword">using</span> <a class="code" href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm</a> = xlkit::Parm&lt;T, PARM_HELP&gt;;</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;</div>
-<div class="line"><a name="l00358"></a><span class="lineno"><a class="line" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">  358</a></span>&#160;<span class="keyword">typedef</span> xlkit::ResultOperandPtr <a class="code" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">xlResultOperandPtr</a>;</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;</div>
-<div class="line"><a name="l00368"></a><span class="lineno"><a class="line" href="group__macros.html#gac7516c97350b41ce21391dd94d71be75">  368</a></span>&#160;<span class="preprocessor">#define XLKIT_INIT_ADDIN_LABEL(LABEL) \</span></div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;<span class="preprocessor">            struct XLInitAddinLabel { \</span></div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;<span class="preprocessor">                XLInitAddinLabel() { \</span></div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;<span class="preprocessor">                    xlkit::Registry::instance().setAddinLabel(LABEL); \</span></div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;<span class="preprocessor">                } \</span></div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;<span class="preprocessor">            }; \</span></div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;<span class="preprocessor">            static XLInitAddinLabel theInitAddinLabel; \</span></div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="preprocessor">            </span></div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span></div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;dumpRegistry() {</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    <a class="code" href="classxlkit_1_1XLKIT__VERSION__NAME_1_1Registry.html#a7060c8869c147e22aa76e1912832cd31">Registry::instance</a>().<a class="code" href="classxlkit_1_1XLKIT__VERSION__NAME_1_1Registry.html#ac5d78aba42cb117b348791ba5f744118">dump</a>();</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;}</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<span class="comment">// Specializations for function introspection</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span> Curr, <span class="keyword">typename</span> End&gt;</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="keyword">struct </span>Registry::Func {</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <span class="comment">// Type string signature</span></div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> getTypes(std::string&amp; types) {</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> mpl::next&lt;Curr&gt;::type Next;</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> mpl::deref&lt;Curr&gt;::type Type;</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        types += detail::TypeInfo&lt;Type&gt;::code();</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        Func&lt;F, Next, End&gt;::getTypes(types);</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    }</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="comment">// Names of the arguments</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> getArgNames(std::string&amp; arg_names) {</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> mpl::next&lt;Curr&gt;::type Next;</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> mpl::deref&lt;Curr&gt;::type Type;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        <span class="keywordflow">if</span> (arg_names.size() &gt; 0)</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;            arg_names += <span class="stringliteral">&quot;, &quot;</span>;</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;        arg_names += detail::TypeInfo&lt;Type&gt;::name();</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;        Func&lt;F, Next, End&gt;::getArgNames(arg_names);</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    }</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    <span class="comment">// Help description for individual arguments</span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> getParmHelp(std::vector&lt;std::string&gt;&amp; parm_help) {</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> mpl::next&lt;Curr&gt;::type Next;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> mpl::deref&lt;Curr&gt;::type Type;</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        parm_help.push_back(detail::TypeInfo&lt;Type&gt;::help());</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;        Func&lt;F, Next, End&gt;::getParmHelp(parm_help);</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    }</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;};</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span> End&gt;</div>
+<div class="line"><a name="l00339"></a><span class="lineno"><a class="line" href="structxlkit_1_1XLKIT__VERSION__NAME_1_1Registry_1_1Func_3_01F_00_01End_00_01End_01_4.html">  339</a></span>&#160;<span class="keyword">struct </span>Registry::Func&lt;F, End, End&gt; {</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> getTypes(std::string&amp;) { }</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> getArgNames(std::string&amp;) { }</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> getParmHelp(std::vector&lt;std::string&gt;&amp;) { }</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;};</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;} <span class="comment">// namespace XLKIT_VERSION_NAME</span></div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;} <span class="comment">// namespace xlkit</span></div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> PARM_HELP = xlkit::detail::empty_&gt;</div>
+<div class="line"><a name="l00355"></a><span class="lineno"><a class="line" href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">  355</a></span>&#160;<span class="keyword">using</span> <a class="code" href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm</a> = xlkit::Parm&lt;T, PARM_HELP&gt;;</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;</div>
+<div class="line"><a name="l00359"></a><span class="lineno"><a class="line" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">  359</a></span>&#160;<span class="keyword">typedef</span> xlkit::ResultOperandPtr <a class="code" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">xlResultOperandPtr</a>;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;</div>
+<div class="line"><a name="l00369"></a><span class="lineno"><a class="line" href="group__macros.html#gac7516c97350b41ce21391dd94d71be75">  369</a></span>&#160;<span class="preprocessor">#define XLKIT_INIT_ADDIN_LABEL(LABEL) \</span></div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;<span class="preprocessor">            struct XLInitAddinLabel { \</span></div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;<span class="preprocessor">                XLInitAddinLabel() { \</span></div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;<span class="preprocessor">                    xlkit::Registry::instance().setAddinLabel(LABEL); \</span></div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;<span class="preprocessor">                } \</span></div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;<span class="preprocessor">            }; \</span></div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="preprocessor">            static XLInitAddinLabel theInitAddinLabel; \</span></div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;<span class="preprocessor">            </span></div>
 <div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;</div>
-<div class="line"><a name="l00380"></a><span class="lineno"><a class="line" href="group__macros.html#ga8c0e5cc3a5cb8f7d6c3a9d0193bdf359">  380</a></span>&#160;<span class="preprocessor">#define XLKIT_PARM(VALUE_TYPE, NAME, HELP) \</span></div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;<span class="preprocessor">            struct HELP_FOR_##NAME { }; \</span></div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="preprocessor">            namespace xlkit { \</span></div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;<span class="preprocessor">            XLKIT_USE_VERSION_NAMESPACE \</span></div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;<span class="preprocessor">            namespace XLKIT_VERSION_NAME { \</span></div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;<span class="preprocessor">            namespace detail { \</span></div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;<span class="preprocessor">            template &lt;&gt; struct ParmHelp&lt;HELP_FOR_##NAME&gt; { \</span></div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;<span class="preprocessor">                static const char* name() { return #NAME; } \</span></div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;<span class="preprocessor">                static const char* help() { return HELP; } \</span></div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;<span class="preprocessor">            }; \</span></div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;<span class="preprocessor">            } } } \</span></div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;<span class="preprocessor">            typedef xlParm&lt;VALUE_TYPE, HELP_FOR_##NAME&gt; xlParm##NAME;</span></div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;            </div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;</div>
-<div class="line"><a name="l00395"></a><span class="lineno"><a class="line" href="group__macros.html#gaf36e4b338360ea733a813dff3714b5b0">  395</a></span>&#160;<span class="preprocessor">#define XLKIT_REGISTER(FUNC, HELP) \</span></div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;<span class="preprocessor">            struct FUNC##Registrar { \</span></div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;<span class="preprocessor">                FUNC##Registrar() { \</span></div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;<span class="preprocessor">                    xlkit::Registry::instance().addFunction(#FUNC,FUNC,HELP); \</span></div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;<span class="preprocessor">                } \</span></div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;<span class="preprocessor">            }; \</span></div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;<span class="preprocessor">            static FUNC##Registrar the##FUNC##Registrar; \</span></div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;<span class="preprocessor">            </span></div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;</div>
-<div class="line"><a name="l00406"></a><span class="lineno"><a class="line" href="group__macros.html#gaea2ea76c50f469f9d9a87ecdc7954ac9">  406</a></span>&#160;<span class="preprocessor">#define XLKIT_REGISTER_AS(XLNAME, FUNC, HELP) \</span></div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;<span class="preprocessor">            struct FUNC##Registrar { \</span></div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="preprocessor">                FUNC##Registrar() { \</span></div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;<span class="preprocessor">                    xlkit::Registry::instance().addFunction(XLNAME,#FUNC,FUNC,HELP); \</span></div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;<span class="preprocessor">                } \</span></div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="preprocessor">            }; \</span></div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;<span class="preprocessor">            static FUNC##Registrar the##FUNC##Registrar; \</span></div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;<span class="preprocessor">            </span></div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;</div>
-<div class="line"><a name="l00416"></a><span class="lineno"><a class="line" href="group__macros.html#ga22f05100ebd892237b434154d2205ef4">  416</a></span>&#160;<span class="preprocessor">#define XLKIT_EXPORT    extern &quot;C&quot; __declspec(dllexport)</span></div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;</div>
-<div class="line"><a name="l00419"></a><span class="lineno"><a class="line" href="group__macros.html#gafd2dac36bad5ee2dcabe0fc520cb56de">  419</a></span>&#160;<span class="preprocessor">#define XLKIT_BEGIN_FUNCTION \</span></div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;<span class="preprocessor">            try { \</span></div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;<span class="preprocessor">            </span></div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;</div>
-<div class="line"><a name="l00425"></a><span class="lineno"><a class="line" href="group__macros.html#ga5dd19d673fadf4005c0c22a8275958e6">  425</a></span>&#160;<span class="preprocessor">#define XLKIT_END_FUNCTION \</span></div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;<span class="preprocessor">            } catch (xlkit::xlException&amp; err) { \</span></div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;<span class="preprocessor">                XLDBG(&quot;Exception caught: %s&quot;, err.what()); \</span></div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;<span class="preprocessor">                return 0; \</span></div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;<span class="preprocessor">            } catch (std::exception&amp; err){ \</span></div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;<span class="preprocessor">                XLDBG(&quot;Exception caught: %s&quot;, err.what()); \</span></div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;<span class="preprocessor">                xlResultOperandPtr result; \</span></div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;<span class="preprocessor">                result-&gt;set(err.what()); \</span></div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;<span class="preprocessor">                return result; \</span></div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;<span class="preprocessor">            } catch (xlkit::xlError&amp; err){ \</span></div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;<span class="preprocessor">                XLDBG(&quot;Exception caught: %s&quot;, err.str().c_str()); \</span></div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;<span class="preprocessor">                xlResultOperandPtr result; \</span></div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;<span class="preprocessor">                result-&gt;set(err); \</span></div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;<span class="preprocessor">                return result; \</span></div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="preprocessor">            } catch (...) { \</span></div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="preprocessor">                XLDBG(&quot;Unknown exception caught&quot;); \</span></div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="preprocessor">                xlResultOperandPtr result; \</span></div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<span class="preprocessor">                result-&gt;set(xlkit::xlError(xlerrValue)); \</span></div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;<span class="preprocessor">                return result; \</span></div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="preprocessor">            } \</span></div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="preprocessor">            </span></div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;<span class="preprocessor">#endif // XLKIT_HPP</span></div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;</div>
+<div class="line"><a name="l00381"></a><span class="lineno"><a class="line" href="group__macros.html#ga8c0e5cc3a5cb8f7d6c3a9d0193bdf359">  381</a></span>&#160;<span class="preprocessor">#define XLKIT_PARM(VALUE_TYPE, NAME, HELP) \</span></div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="preprocessor">            struct HELP_FOR_##NAME { }; \</span></div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;<span class="preprocessor">            namespace xlkit { \</span></div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;<span class="preprocessor">            XLKIT_USE_VERSION_NAMESPACE \</span></div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;<span class="preprocessor">            namespace XLKIT_VERSION_NAME { \</span></div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;<span class="preprocessor">            namespace detail { \</span></div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;<span class="preprocessor">            template &lt;&gt; struct ParmHelp&lt;HELP_FOR_##NAME&gt; { \</span></div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;<span class="preprocessor">                static const char* name() { return #NAME; } \</span></div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;<span class="preprocessor">                static const char* help() { return HELP; } \</span></div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;<span class="preprocessor">            }; \</span></div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;<span class="preprocessor">            } } } \</span></div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;<span class="preprocessor">            typedef xlParm&lt;VALUE_TYPE, HELP_FOR_##NAME&gt; xlParm##NAME;</span></div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;            </div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;</div>
+<div class="line"><a name="l00396"></a><span class="lineno"><a class="line" href="group__macros.html#gaf36e4b338360ea733a813dff3714b5b0">  396</a></span>&#160;<span class="preprocessor">#define XLKIT_REGISTER(FUNC, HELP) \</span></div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;<span class="preprocessor">            struct FUNC##Registrar { \</span></div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;<span class="preprocessor">                FUNC##Registrar() { \</span></div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;<span class="preprocessor">                    xlkit::Registry::instance().addFunction(#FUNC,FUNC,HELP); \</span></div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;<span class="preprocessor">                } \</span></div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;<span class="preprocessor">            }; \</span></div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;<span class="preprocessor">            static FUNC##Registrar the##FUNC##Registrar; \</span></div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;<span class="preprocessor">            </span></div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;</div>
+<div class="line"><a name="l00407"></a><span class="lineno"><a class="line" href="group__macros.html#gaea2ea76c50f469f9d9a87ecdc7954ac9">  407</a></span>&#160;<span class="preprocessor">#define XLKIT_REGISTER_AS(XLNAME, FUNC, HELP) \</span></div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="preprocessor">            struct FUNC##Registrar { \</span></div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;<span class="preprocessor">                FUNC##Registrar() { \</span></div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;<span class="preprocessor">                    xlkit::Registry::instance().addFunction(XLNAME,#FUNC,FUNC,HELP); \</span></div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="preprocessor">                } \</span></div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;<span class="preprocessor">            }; \</span></div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;<span class="preprocessor">            static FUNC##Registrar the##FUNC##Registrar; \</span></div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;<span class="preprocessor">            </span></div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;</div>
+<div class="line"><a name="l00417"></a><span class="lineno"><a class="line" href="group__macros.html#ga22f05100ebd892237b434154d2205ef4">  417</a></span>&#160;<span class="preprocessor">#define XLKIT_EXPORT    extern &quot;C&quot; __declspec(dllexport)</span></div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;</div>
+<div class="line"><a name="l00420"></a><span class="lineno"><a class="line" href="group__macros.html#gafd2dac36bad5ee2dcabe0fc520cb56de">  420</a></span>&#160;<span class="preprocessor">#define XLKIT_BEGIN_FUNCTION \</span></div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;<span class="preprocessor">            try { \</span></div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;<span class="preprocessor">            </span></div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;</div>
+<div class="line"><a name="l00426"></a><span class="lineno"><a class="line" href="group__macros.html#ga5dd19d673fadf4005c0c22a8275958e6">  426</a></span>&#160;<span class="preprocessor">#define XLKIT_END_FUNCTION \</span></div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;<span class="preprocessor">            } catch (xlkit::xlException&amp; err) { \</span></div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;<span class="preprocessor">                XLDBG(&quot;Exception caught: %s&quot;, err.what()); \</span></div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;<span class="preprocessor">                return 0; \</span></div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;<span class="preprocessor">            } catch (std::exception&amp; err){ \</span></div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;<span class="preprocessor">                XLDBG(&quot;Exception caught: %s&quot;, err.what()); \</span></div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;<span class="preprocessor">                xlResultOperandPtr result; \</span></div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;<span class="preprocessor">                result-&gt;set(err.what()); \</span></div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;<span class="preprocessor">                return result; \</span></div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;<span class="preprocessor">            } catch (xlkit::xlError&amp; err){ \</span></div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;<span class="preprocessor">                XLDBG(&quot;Exception caught: %s&quot;, err.str().c_str()); \</span></div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;<span class="preprocessor">                xlResultOperandPtr result; \</span></div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;<span class="preprocessor">                result-&gt;set(err); \</span></div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="preprocessor">                return result; \</span></div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="preprocessor">            } catch (...) { \</span></div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="preprocessor">                XLDBG(&quot;Unknown exception caught&quot;); \</span></div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<span class="preprocessor">                xlResultOperandPtr result; \</span></div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;<span class="preprocessor">                result-&gt;set(xlkit::xlError(xlerrValue)); \</span></div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="preprocessor">                return result; \</span></div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="preprocessor">            } \</span></div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;<span class="preprocessor">            </span></div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;<span class="preprocessor">#endif // XLKIT_HPP</span></div>
 <div class="ttc" id="classxlkit_1_1XLKIT__VERSION__NAME_1_1Registry_html"><div class="ttname"><a href="classxlkit_1_1XLKIT__VERSION__NAME_1_1Registry.html">xlkit::XLKIT_VERSION_NAME::Registry</a></div><div class="ttdoc">Stores all registry of functions for the XLL. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:185</div></div>
-<div class="ttc" id="classxlkit_1_1XLKIT__VERSION__NAME_1_1ResultOperandPtr_html_a966841174939936c2ecae33ef8b1c73b"><div class="ttname"><a href="classxlkit_1_1XLKIT__VERSION__NAME_1_1ResultOperandPtr.html#a966841174939936c2ecae33ef8b1c73b">xlkit::XLKIT_VERSION_NAME::ResultOperandPtr::ResultOperandPtr</a></div><div class="ttdeci">ResultOperandPtr()</div><div class="ttdoc">Get pointer to TLS copy and default initialize it. </div><div class="ttdef"><b>Definition:</b> xlkit.cpp:330</div></div>
-<div class="ttc" id="group__aliases_html_ga47c8bd280d2a0f545231c26e68ddeee8"><div class="ttname"><a href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">xlResultOperandPtr</a></div><div class="ttdeci">xlkit::ResultOperandPtr xlResultOperandPtr</div><div class="ttdoc">Return value for XLL functions. See xlResultOperandPtr. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:358</div></div>
-<div class="ttc" id="group__aliases_html_ga7c761c71b49da3d91873150210b8a1ee"><div class="ttname"><a href="group__aliases.html#ga7c761c71b49da3d91873150210b8a1ee">xlOperand</a></div><div class="ttdeci">xlkit::xlOperand xlOperand</div><div class="ttdoc">C++ wrapper for XLOPER struct. See xlOper4. </div><div class="ttdef"><b>Definition:</b> xlOperand.hpp:557</div></div>
+<div class="ttc" id="classxlkit_1_1XLKIT__VERSION__NAME_1_1ResultOperandPtr_html_a966841174939936c2ecae33ef8b1c73b"><div class="ttname"><a href="classxlkit_1_1XLKIT__VERSION__NAME_1_1ResultOperandPtr.html#a966841174939936c2ecae33ef8b1c73b">xlkit::XLKIT_VERSION_NAME::ResultOperandPtr::ResultOperandPtr</a></div><div class="ttdeci">ResultOperandPtr()</div><div class="ttdoc">Get pointer to TLS copy and default initialize it. </div><div class="ttdef"><b>Definition:</b> xlkit.cpp:332</div></div>
+<div class="ttc" id="group__aliases_html_ga47c8bd280d2a0f545231c26e68ddeee8"><div class="ttname"><a href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">xlResultOperandPtr</a></div><div class="ttdeci">xlkit::ResultOperandPtr xlResultOperandPtr</div><div class="ttdoc">Return value for XLL functions. See xlResultOperandPtr. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:359</div></div>
+<div class="ttc" id="group__aliases_html_ga7c761c71b49da3d91873150210b8a1ee"><div class="ttname"><a href="group__aliases.html#ga7c761c71b49da3d91873150210b8a1ee">xlOperand</a></div><div class="ttdeci">xlkit::xlOperand xlOperand</div><div class="ttdoc">C++ wrapper for XLOPER struct. See xlOper4. </div><div class="ttdef"><b>Definition:</b> xlOperand.hpp:547</div></div>
 <div class="ttc" id="xlOperand_8hpp_html"><div class="ttname"><a href="xlOperand_8hpp.html">xlOperand.hpp</a></div><div class="ttdoc">xlkit::xlOperand class </div></div>
 <div class="ttc" id="classxlkit_1_1XLKIT__VERSION__NAME_1_1Registry_html_adfceef823649070ec6b1d2561bcb31c9"><div class="ttname"><a href="classxlkit_1_1XLKIT__VERSION__NAME_1_1Registry.html#adfceef823649070ec6b1d2561bcb31c9">xlkit::XLKIT_VERSION_NAME::Registry::addFunction</a></div><div class="ttdeci">void addFunction(const std::string &amp;name, F f, const char *help)</div><div class="ttdoc">Register a new function.Name of the Excel function is the same as the C++ function name...</div><div class="ttdef"><b>Definition:</b> xlkit.hpp:202</div></div>
 <div class="ttc" id="classxlkit_1_1XLKIT__VERSION__NAME_1_1ResultOperandPtr_html"><div class="ttname"><a href="classxlkit_1_1XLKIT__VERSION__NAME_1_1ResultOperandPtr.html">xlkit::XLKIT_VERSION_NAME::ResultOperandPtr</a></div><div class="ttdoc">Return value for XLL functions. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:55</div></div>
@@ -524,7 +525,7 @@ $(document).ready(function(){initNavTree('xlkit_8hpp_source.html','');});
 <div class="ttc" id="xldebug_8hpp_html"><div class="ttname"><a href="xldebug_8hpp.html">xldebug.hpp</a></div><div class="ttdoc">XLKit debugging facility for the XLDBG() macro. </div></div>
 <div class="ttc" id="classxlkit_1_1XLKIT__VERSION__NAME_1_1Registry_html_a75aa2e5487c65ba22f7947028b8bb586"><div class="ttname"><a href="classxlkit_1_1XLKIT__VERSION__NAME_1_1Registry.html#a75aa2e5487c65ba22f7947028b8bb586">xlkit::XLKIT_VERSION_NAME::Registry::functions</a></div><div class="ttdeci">const NameMap &amp; functions() const </div><div class="ttdoc">List of registered functions. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:252</div></div>
 <div class="ttc" id="group__other__macros_html_gafa3eaf65aa169eee5e1511b7f6d6eb71"><div class="ttname"><a href="group__other__macros.html#gafa3eaf65aa169eee5e1511b7f6d6eb71">XLKIT_USE_VERSION_NAMESPACE</a></div><div class="ttdeci">#define XLKIT_USE_VERSION_NAMESPACE</div><div class="ttdoc">Macro used to pull the versioned namespace into the main xlkit namepsace. </div><div class="ttdef"><b>Definition:</b> xlversion.hpp:52</div></div>
-<div class="ttc" id="group__aliases_html_gab1fbf3ee7632337ca08ca95cc66c5923"><div class="ttname"><a href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm</a></div><div class="ttdeci">xlkit::Parm&lt; T, PARM_HELP &gt; xlParm</div><div class="ttdoc">An xlkit function parameter of type T, with optional help for convenience. See Parm. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:354</div></div>
+<div class="ttc" id="group__aliases_html_gab1fbf3ee7632337ca08ca95cc66c5923"><div class="ttname"><a href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm</a></div><div class="ttdeci">xlkit::Parm&lt; T, PARM_HELP &gt; xlParm</div><div class="ttdoc">An xlkit function parameter of type T, with optional help for convenience. See Parm. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:355</div></div>
 <div class="ttc" id="classxlkit_1_1XLKIT__VERSION__NAME_1_1Parm_html_a43db27d0481ac409ceeb774b9197bc70"><div class="ttname"><a href="classxlkit_1_1XLKIT__VERSION__NAME_1_1Parm.html#a43db27d0481ac409ceeb774b9197bc70">xlkit::XLKIT_VERSION_NAME::Parm::help</a></div><div class="ttdeci">static const char * help()</div><div class="ttdoc">Help of the parameter for Excel. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:135</div></div>
 <div class="ttc" id="xlversion_8hpp_html"><div class="ttname"><a href="xlversion_8hpp.html">xlversion.hpp</a></div><div class="ttdoc">XLKit version defines. </div></div>
 <div class="ttc" id="classxlkit_1_1XLKIT__VERSION__NAME_1_1Parm_html"><div class="ttname"><a href="classxlkit_1_1XLKIT__VERSION__NAME_1_1Parm.html">xlkit::XLKIT_VERSION_NAME::Parm</a></div><div class="ttdoc">Function parameter with associated help. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:125</div></div>
@@ -538,7 +539,7 @@ $(document).ready(function(){initNavTree('xlkit_8hpp_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_06100256ddc129a40bc519f2359b47e7.html">xlkit</a></li><li class="navelem"><a class="el" href="xlkit_8hpp.html">xlkit.hpp</a></li>
-    <li class="footer">Generated on Sun Apr 27 2014 02:24:43 for XLKit by
+    <li class="footer">Generated on Sun Apr 27 2014 12:51:14 for XLKit by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

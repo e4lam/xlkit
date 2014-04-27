@@ -164,12 +164,12 @@ Macros</h2></td></tr>
 <div class="line">                result-&gt;set(xlkit::xlError(xlerrValue)); \</div>
 <div class="line">                return result; \</div>
 <div class="line">            } \</div>
-<div class="ttc" id="group__aliases_html_ga47c8bd280d2a0f545231c26e68ddeee8"><div class="ttname"><a href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">xlResultOperandPtr</a></div><div class="ttdeci">xlkit::ResultOperandPtr xlResultOperandPtr</div><div class="ttdoc">Return value for XLL functions. See xlResultOperandPtr. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:358</div></div>
+<div class="ttc" id="group__aliases_html_ga47c8bd280d2a0f545231c26e68ddeee8"><div class="ttname"><a href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">xlResultOperandPtr</a></div><div class="ttdeci">xlkit::ResultOperandPtr xlResultOperandPtr</div><div class="ttdoc">Return value for XLL functions. See xlResultOperandPtr. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:359</div></div>
 <div class="ttc" id="xldebug_8hpp_html_a9c2b66096c88ebcbb63bc0428748bb45"><div class="ttname"><a href="xldebug_8hpp.html#a9c2b66096c88ebcbb63bc0428748bb45">XLDBG</a></div><div class="ttdeci">#define XLDBG(FORMAT,...)</div><div class="ttdoc">Provides a printf style debug output. When run inside Visual Studio, it will print to the Output wind...</div><div class="ttdef"><b>Definition:</b> xldebug.hpp:85</div></div>
 </div><!-- fragment -->
 <p>All Excel functions end with this macro. </p>
 <dl class="section note"><dt>Note</dt><dd>Return 0 will be interpreted by Excel as #NULL!. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a4">xlkitExample.cpp</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a3">xlkitExample.cpp</a>.</dd>
 </dl>
 </div>
 </div>
@@ -194,8 +194,7 @@ Macros</h2></td></tr>
 <div class="line">            static XLInitAddinLabel theInitAddinLabel; \</div>
 </div><!-- fragment -->
 <p>Macro to register the name of the add-in. This shows up as the category in Excel's Function Wizard for all registered functions. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a0">xlkitExample.cpp</a>.</dd>
-</dl>
+
 </div>
 </div>
 <a class="anchor" id="ga8c0e5cc3a5cb8f7d6c3a9d0193bdf359"></a>
@@ -239,11 +238,11 @@ Macros</h2></td></tr>
 <div class="line">            } } } \</div>
 <div class="line">            typedef <a class="code" href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm&lt;VALUE_TYPE, HELP_FOR_##NAME&gt;</a> <a class="code" href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm</a>##NAME;</div>
 <div class="ttc" id="group__other__macros_html_ga111c752d539aa6c1d4584821e9904e2c"><div class="ttname"><a href="group__other__macros.html#ga111c752d539aa6c1d4584821e9904e2c">XLKIT_VERSION_NAME</a></div><div class="ttdeci">#define XLKIT_VERSION_NAME</div><div class="ttdoc">Version namespace for this library. </div><div class="ttdef"><b>Definition:</b> xlversion.hpp:33</div></div>
-<div class="ttc" id="group__aliases_html_gab1fbf3ee7632337ca08ca95cc66c5923"><div class="ttname"><a href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm</a></div><div class="ttdeci">xlkit::Parm&lt; T, PARM_HELP &gt; xlParm</div><div class="ttdoc">An xlkit function parameter of type T, with optional help for convenience. See Parm. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:354</div></div>
+<div class="ttc" id="group__aliases_html_gab1fbf3ee7632337ca08ca95cc66c5923"><div class="ttname"><a href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm</a></div><div class="ttdeci">xlkit::Parm&lt; T, PARM_HELP &gt; xlParm</div><div class="ttdoc">An xlkit function parameter of type T, with optional help for convenience. See Parm. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:355</div></div>
 </div><!-- fragment -->
 <p>Macro to create <code>xlParm&lt;NAME&gt;</code> typedef as <code>xlParm&lt;VALUE_TYPE, HELP&gt;</code> proxy type for a variable of VALUE_TYPE. </p>
 <div class="fragment"><div class="line"><span class="keyword">typedef</span> of @pre <a class="code" href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm&lt;VALUE_TYPE, HELP&gt;</a> <a class="code" href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm</a>\#\#NAME </div>
-</div><!-- fragment --> <dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a1">xlkitExample.cpp</a>.</dd>
+</div><!-- fragment --> <dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a0">xlkitExample.cpp</a>.</dd>
 </dl>
 </div>
 </div>
@@ -278,7 +277,7 @@ Macros</h2></td></tr>
 <div class="line">            static FUNC##Registrar the##FUNC##Registrar; \</div>
 </div><!-- fragment -->
 <p>Macro to register the given function with xlkit. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a5">xlkitExample.cpp</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a4">xlkitExample.cpp</a>.</dd>
 </dl>
 </div>
 </div>
@@ -319,7 +318,7 @@ Macros</h2></td></tr>
 <div class="line">            static FUNC##Registrar the##FUNC##Registrar; \</div>
 </div><!-- fragment -->
 <p>Macro to register the given function with xlkit with a different name from the C++ function name. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a6">xlkitExample.cpp</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a5">xlkitExample.cpp</a>.</dd>
 </dl>
 </div>
 </div>
@@ -328,7 +327,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Apr 27 2014 02:24:43 for XLKit by
+    <li class="footer">Generated on Sun Apr 27 2014 12:51:15 for XLKit by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>
