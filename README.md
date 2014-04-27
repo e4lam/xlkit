@@ -9,4 +9,4 @@ The requirements for this library are:
 
 It was developed using the Excel 2013 XLL SDK and Boost 1.55 although older versions should work as well. The requirement for Visual Studio 2013 is because it uses C++11 features.
 
-Browse [the documentation here] (http://e4lam.github.com/xlkit).
+Visit [the project page] (http://e4lam.github.io/xlkit) or directly browse [the documentation] (http://e4lam.github.io/xlkit/docs).
