@@ -1,0 +1,62 @@
+/**
+@mainpage
+
+@section intro Introduction
+
+XLKit is a modern C++ wrapper for using the Excel XLL SDK. It is used to write native plug-ins (aka *Add-Ins*) for Microsoft Excel. This is an open-source project distributed under the Mozilla Public License v2.0.
+
+The requirements for this library are:
+- Visual Studio 2013
+- Headers from [Boost] (http://www.boost.org)
+- [Excel XLL SDK] (http://msdn.microsoft.com/en-us/library/office/bb687883%28v=office.15%29.aspx) xlcall.h header
+
+It was developed using the Excel 2013 XLL SDK and Boost 1.55 although older versions should work as well. The requirement for Visual Studio 2013 is because it uses C++11 features.
+
+@section install Installation
+
+To add the use of XLKit to your project, add the top level XLKit directory to
+your list of project include directories. Since this library also requires some Boost and Excel SDK headers, you also need those in your project include directories as well. To summarize, your include directories need to ensure that these includes work:
+	-# `<xlkit/xlkit.hpp>` (from xlkit library)
+	-# `<boost/config.hpp>` (from boost library)
+	-# `<xlcall.h>` (from Excel XLL Software Development Kit)
+
+XLKit consists of only one main module, @ref xlkit.cpp. So the simplest way is
+to simply add include `<xlkit/xlkit.cpp>` into a `.cpp` file that is compiled
+in your project. This file pulls in `<windows.h>` and defines the require XLL
+entry points for your project to be recognized by Excel. Alternatively, you can
+also compile this file into its own library and then link it into your project.
+
+Detailed project creation instructions is in the @ref HOWTO "setup howto".
+
+@section usage Usage
+
+Once you have the necessary set up, to write your XLL is simple. Here's the simplest example. See more details in @ref xlkitExample.cpp.
+
+@code
+// Set the label that shows up in the Add-in Manager. Only do this once.
+XLKIT_INIT_ADDIN_LABEL("XLKit Test Addin")
+
+// Define a function that can be used from Excel.
+// It needs to be defined as XLKIT_EXPORT and return an xlOperand* whose
+// return value is an xlResultOperandPtr object.
+// Supported parameter types are: double, int, const char*, xlOperand*
+XLKIT_EXPORT xlOperand*
+xlCirc(double diameter)
+{
+	// Start a try block around the code
+	XLKIT_BEGIN_FUNCTION
+
+	// Code for the function
+	xlResultOperandPtr result;
+	result->set(diameter * 3.14159);
+	return result;
+
+	// End the try block with default catch clauses
+	XLKIT_END_FUNCTION		
+}
+
+// Register it with Excel
+XLKIT_REGISTER(xlCirc, "Circumference of a circle.")
+@endcode
+
+*/
