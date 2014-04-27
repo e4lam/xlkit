@@ -1,5 +1,4 @@
-# XLKit 
-## Modern C++ Wrapper for the Excel XLL SDK
+## XLKit - Modern C++ Wrapper for the Excel XLL SDK
 
 XLKit is a modern C++ wrapper for using the Excel XLL SDK. It is used to write native plug-ins (aka *Add-Ins*) for Microsoft Excel. This is an open-source project distributed under the Mozilla Public License v2.0.
 
