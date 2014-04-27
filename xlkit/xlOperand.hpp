@@ -84,7 +84,7 @@ struct xlError {
 	int num;
 };
 
-std::string
+inline std::string
 xltypeString(unsigned int xltype) {
 
 	std::string xlfree;
@@ -278,12 +278,12 @@ class xlOper4 : private XLOPER {
 	/// Assignment operator
 	xlOper4& operator=(const xlOper4& other) {
 		if (this != &other) {
-			reset();
 			if (other.isString()) {
-				set(other.get<const char *>());
+				set(other.get<std::string>());
 			} else if (other.isCellMatrix()) {
 				set(other.get<ConstCellMatrixRef>());
 			} else {
+				reset();
 				::memcpy(this, &other, sizeof(*this));
 			}
 		}
@@ -349,14 +349,8 @@ class xlOper4 : private XLOPER {
 	std::string get<std::string>() const {
 		if (!isString())
 			return castValue<std::string>();
-		return std::string(reinterpret_cast<char *>(val.str + 1));
-	}
-	template <>
-	const char* get<const char*>() const {
-		// This method is for efficiency only, does not convert.
-		if (!isString())
-			XLKIT_THROW("Cannot cast to const char* from " + xltypeString(xltype));
-		return reinterpret_cast<char *>(val.str + 1);
+		uint8_t* blen = reinterpret_cast<uint8_t*>(&val.str[0]);
+		return std::string(reinterpret_cast<char *>(val.str + 1), *blen);
 	}
 	template <>
 	bool get<bool>() const {
@@ -451,23 +445,23 @@ class xlOper4 : private XLOPER {
 	void set(const std::string& v) {
 		reset();
 		xltype = xltypeStr | xlbitDLLFree;
-		size_t len = v.size() + 2;
-		val.str = reinterpret_cast<char*>(::malloc(len * sizeof(uint8_t)));
+		size_t len = v.size();
+		val.str = reinterpret_cast<char*>(::malloc((len+1) * sizeof(uint8_t)));
 		uint8_t* blen = reinterpret_cast<uint8_t*>(&val.str[0]);
 		*blen = uint8_t(len < 255 ? len : 255);
 		XLKIT_PUSH_DISABLE_WARN_DEPRECATION
-		::strcpy(reinterpret_cast<char *>(val.str + 1), v.c_str());
+		::strncpy(reinterpret_cast<char *>(val.str + 1), v.data(), len);
 		XLKIT_POP_DISABLE_WARN_DEPRECATION
 	}
 	void set(const char* v) {
 		reset();
 		xltype = xltypeStr | xlbitDLLFree;
-		size_t len = ::strlen(v) + 2;
-		val.str = reinterpret_cast<char*>(::malloc(len * sizeof(uint8_t)));
+		size_t len = ::strlen(v);
+		val.str = reinterpret_cast<char*>(::malloc((len+1) * sizeof(uint8_t)));
 		uint8_t* blen = reinterpret_cast<uint8_t*>(&val.str[0]);
 		*blen = uint8_t(len < 255 ? len : 255);
 		XLKIT_PUSH_DISABLE_WARN_DEPRECATION
-		::strcpy(reinterpret_cast<char *>(val.str + 1), v);
+		::strncpy(reinterpret_cast<char *>(val.str + 1), v, len);
 		XLKIT_POP_DISABLE_WARN_DEPRECATION
 	}
 	void set(bool v) {
@@ -506,7 +500,7 @@ class xlOper4 : private XLOPER {
 		if (isInteger())
 			return (T)(get<int>());
 		if (isString())
-			return boost::lexical_cast<T>(get<const char*>());
+			return boost::lexical_cast<T>(get<std::string>());
 		if (isBool())
 			return (T)(get<bool>());
 		XLKIT_THROW("Unsupported conversion from " + xltypeString(xltype));
@@ -518,14 +512,10 @@ class xlOper4 : private XLOPER {
 			return boost::lexical_cast<std::string>(get<double>());
 		if (isInteger())
 			return boost::lexical_cast<std::string>(get<int>());
-		if (isString())
-			return std::string(get<const char*>());
 		if (isBool())
 			return boost::lexical_cast<std::string>(get<bool>());
 		if (isError())
 			return xlError(val.err).str();
-		if (isMissing())
-			return std::string("xltypeMissing");
 		XLKIT_THROW("Cannot cast to string from " + xltypeString(xltype));
 	}
 	template <>

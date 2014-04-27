@@ -297,7 +297,8 @@ class Registry {
 	static Registry* theInstance;
 };
 
-void dumpRegistry() {
+inline void
+dumpRegistry() {
 	Registry::instance().dump();
 }
 

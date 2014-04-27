@@ -38,7 +38,7 @@ namespace detail {
 
 void outputDebugString(const char *msg);
 
-std::string
+inline std::string
 debugMsgV(const char* file, int n, const char* func, const char *fmt, va_list args) {
 	const char* base = strrchr(file, '\\');
 	if (!base)
@@ -50,7 +50,7 @@ debugMsgV(const char* file, int n, const char* func, const char *fmt, va_list ar
 	msg.append("\n");
 	return msg;
 }
-std::string
+inline std::string
 debugMsg(const char* file, int n, const char* func, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
@@ -58,11 +58,11 @@ debugMsg(const char* file, int n, const char* func, const char *fmt, ...) {
 	va_end(args);
 	return msg;
 }
-std::string
+inline std::string
 debugMsgS(const char* file, int n, const char* func, const std::string& msg) {
 	return debugMsg(file, n, func, "%s", msg.c_str());
 }
-void
+inline void
 debugOut(const char* file, int n, const char* func, const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);

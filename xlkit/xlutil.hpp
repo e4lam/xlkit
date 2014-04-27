@@ -50,7 +50,8 @@ namespace XLKIT_VERSION_NAME {
 #endif
 
 /// vsprintf() analog that returns an std::string
-std::string strprintfV(const char *fmt, va_list args) {
+inline std::string
+strprintfV(const char *fmt, va_list args) {
 	static const size_t NBUF = 2048;
 	std::string str(NBUF, 0);
 	while (true) {
@@ -66,7 +67,8 @@ std::string strprintfV(const char *fmt, va_list args) {
 	return str;
 }
 /// sprintf() analog that returns an std::string
-std::string strprintf(const char *fmt, ...) {
+inline std::string
+strprintf(const char *fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 	std::string str = strprintfV(fmt, args);

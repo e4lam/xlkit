@@ -174,17 +174,19 @@ class ExcelHost {
 			callV(xlfRegister, func_id, args);
 			if (func_id.isError()) {
 				std::string error_str = func_id.get<std::string>();
+				std::string dll = dll_name.get<std::string>();
 				XLDBG("Failed to register %s (%s) in %s: Error %s (%d)",
 					  it.first.c_str(),
 					  it.second.myTypes.c_str(),
-					  dll_name.get<const char*>(),
+					  dll.c_str(),
 					  error_str.c_str(),
 					  func_id.get<xlError>().num);
 			} else {
+				std::string dll = dll_name.get<std::string>();
 				XLDBG("Register %s (%s) in %s as %f",
 					  it.first.c_str(),
 					  it.second.myTypes.c_str(),
-					  dll_name.get<const char*>(),
+					  dll.c_str(),
 					  func_id.get<double>());
 			}
 		}

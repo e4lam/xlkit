@@ -18,5 +18,8 @@
     <ClCompile Include="xlkitExample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="xlkitDllMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
