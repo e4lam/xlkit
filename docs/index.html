@@ -126,22 +126,20 @@ Usage</h1>
 <div class="line"><a class="code" href="group__macros.html#gac7516c97350b41ce21391dd94d71be75">XLKIT_INIT_ADDIN_LABEL</a>(<span class="stringliteral">&quot;XLKit Test Addin&quot;</span>)</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Define a function that can be used from Excel.</span></div>
-<div class="line"><span class="comment">// It needs to be defined as XLKIT_EXPORT and return an xlOperand* whose</span></div>
-<div class="line"><span class="comment">// return value is an xlResultOperandPtr object.</span></div>
-<div class="line"><span class="comment">// Supported parameter types are: double, int, const char*, xlOperand*</span></div>
-<div class="line"><a class="code" href="group__macros.html#ga22f05100ebd892237b434154d2205ef4">XLKIT_EXPORT</a> <a class="code" href="group__aliases.html#ga7c761c71b49da3d91873150210b8a1ee">xlOperand</a>*</div>
+<div class="line"><span class="comment">// It needs to use the XLKIT_API calling convention</span></div>
+<div class="line"><span class="comment">// Supported return/parameter types are: double, int, const char*, xlOperand*</span></div>
+<div class="line">double <a class="code" href="group__macros.html#ga06b437451f78e10f3b12c1b5b9fc44d6">XLKIT_API</a></div>
 <div class="line">xlCirc(<span class="keywordtype">double</span> diameter)</div>
 <div class="line">{</div>
-<div class="line">    <span class="comment">// Start a try block around the code</span></div>
+<div class="line">    <span class="comment">// Export this function to the DLL and start a try block around the code</span></div>
 <div class="line">    <a class="code" href="group__macros.html#gafd2dac36bad5ee2dcabe0fc520cb56de">XLKIT_BEGIN_FUNCTION</a></div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Code for the function</span></div>
-<div class="line">    <a class="code" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">xlResultOperandPtr</a> result;</div>
-<div class="line">    result-&gt;set(diameter * 3.14159);</div>
-<div class="line">    <span class="keywordflow">return</span> result;</div>
+<div class="line">    <span class="keywordflow">return</span> diameter * 3.14159;</div>
 <div class="line"></div>
-<div class="line">    <span class="comment">// End the try block with default catch clauses</span></div>
-<div class="line">    <a class="code" href="group__macros.html#ga5dd19d673fadf4005c0c22a8275958e6">XLKIT_END_FUNCTION</a>      </div>
+<div class="line">    <span class="comment">// End the try block with default catch clauses and give it the return type</span></div>
+<div class="line">    <span class="comment">// to have sensible return values when exceptions are caught.</span></div>
+<div class="line">    <a class="code" href="group__macros.html#gad39b49cebaed3956ae025cda567ce0b6">XLKIT_END_FUNCTION</a>(<span class="keywordtype">double</span>)</div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Register it with Excel</span></div>
@@ -151,7 +149,7 @@ Usage</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Apr 27 2014 12:51:15 for XLKit by
+    <li class="footer">Generated on Tue Apr 29 2014 00:36:55 for XLKit by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

@@ -141,67 +141,49 @@ $(document).ready(function(){initNavTree('xlkitExample_8cpp-example.html','');})
 <div class="line"><span class="comment">// Simplest example of an Excel function to create.</span></div>
 <div class="line"><span class="comment">//</span></div>
 <div class="line"></div>
-<div class="line"><span class="comment">// Set up help to be used for parms that is displayed in Excel&#39;s Function</span></div>
-<div class="line"><span class="comment">// Wizard. In concept, the example XLKIT_PARM() below expands to:</span></div>
-<div class="line"><span class="comment">//</span></div>
-<div class="line"><span class="comment">//  typedef xlParm&lt;double, &quot;Diameter of a circle&quot;&gt; Diameter;</span></div>
-<div class="line"><span class="comment">//</span></div>
-<div class="line"><a name="a0"></a><a class="code" href="group__macros.html#ga8c0e5cc3a5cb8f7d6c3a9d0193bdf359">XLKIT_PARM</a>(<span class="keywordtype">double</span>, Diameter, <span class="stringliteral">&quot;Diameter of a circle&quot;</span>)</div>
-<div class="line"></div>
-<div class="line"><span class="comment">// Write your function, declared with XLKIT_EXPORT to return an xlOperand*</span></div>
-<div class="line"><a name="a1"></a><a class="code" href="group__macros.html#ga22f05100ebd892237b434154d2205ef4">XLKIT_EXPORT</a> <a class="code" href="group__aliases.html#ga7c761c71b49da3d91873150210b8a1ee">xlOperand</a>*</div>
-<div class="line">xlCirc(xlParmDiameter diameter)</div>
+<div class="line"><span class="comment">// Write your function, using the XLKIT_API calling convention</span></div>
+<div class="line"><span class="keywordtype">double</span> <a name="a0"></a><a class="code" href="group__macros.html#ga06b437451f78e10f3b12c1b5b9fc44d6">XLKIT_API</a></div>
+<div class="line">xlCirc(<span class="keywordtype">double</span> diameter)</div>
 <div class="line">{</div>
-<div class="line">    <span class="comment">// The function contents are enclosed by XLKIT_BEGIN_FUNCTION /</span></div>
-<div class="line">    <span class="comment">// XLKIT_END_FUNCTION macros to catch and handle exceptions.</span></div>
-<div class="line">    <a name="a2"></a><a class="code" href="group__macros.html#gafd2dac36bad5ee2dcabe0fc520cb56de">XLKIT_BEGIN_FUNCTION</a></div>
+<div class="line">    <span class="comment">// Being the function with the XLKIT_BEGIN_FUNCTION macro to export this</span></div>
+<div class="line">    <span class="comment">// function to the DLL and to start a try block.</span></div>
+<div class="line">    <a name="a1"></a><a class="code" href="group__macros.html#gafd2dac36bad5ee2dcabe0fc520cb56de">XLKIT_BEGIN_FUNCTION</a></div>
 <div class="line"></div>
-<div class="line">    <span class="comment">// All return values must be an xlResultOperand which represents a pointer</span></div>
-<div class="line">    <span class="comment">// to a thread-local copy of an xlOperand for return to Excel.</span></div>
-<div class="line">    <a class="code" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">xlResultOperandPtr</a> result;</div>
+<div class="line">    <span class="keywordflow">return</span> diameter * 3.14159;</div>
 <div class="line"></div>
-<div class="line">    <span class="comment">// Actual code for the function. Use .get() to for the underlying value of</span></div>
-<div class="line">    <span class="comment">// the xlParm.</span></div>
-<div class="line">    result-&gt;set(diameter.value() * 3.14159);</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Return the result.</span></div>
-<div class="line">    <span class="keywordflow">return</span> result;</div>
-<div class="line"></div>
-<div class="line">    <a name="a3"></a><a class="code" href="group__macros.html#ga5dd19d673fadf4005c0c22a8275958e6">XLKIT_END_FUNCTION</a>  <span class="comment">// End the function with this macro</span></div>
+<div class="line">    <span class="comment">// End the function with XLKIT_END_FUNCTION(return_type). The return type</span></div>
+<div class="line">    <span class="comment">// allows it to return something reasonable under error conditions.</span></div>
+<div class="line">    <a name="a2"></a><a class="code" href="group__macros.html#gad39b49cebaed3956ae025cda567ce0b6">XLKIT_END_FUNCTION</a>(<span class="keywordtype">double</span>)</div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Register your function for the XLL</span></div>
-<div class="line"><a name="a4"></a><a class="code" href="group__macros.html#gaf36e4b338360ea733a813dff3714b5b0">XLKIT_REGISTER</a>(xlCirc, <span class="stringliteral">&quot;Circumference of circle&quot;</span>)</div>
-<div class="line"></div>
-<div class="line"></div>
-<div class="line"><span class="comment">// Alternatively, you can just use double (or int) directly. But, then there</span></div>
-<div class="line"><span class="comment">// will be no help for it in Excel&#39;s Function Wizard.</span></div>
-<div class="line"><a class="code" href="group__macros.html#ga22f05100ebd892237b434154d2205ef4">XLKIT_EXPORT</a> <a class="code" href="group__aliases.html#ga7c761c71b49da3d91873150210b8a1ee">xlOperand</a>*</div>
-<div class="line">xlCircWithoutHelp(<span class="keywordtype">double</span> diameter)</div>
-<div class="line">{</div>
-<div class="line">    <a class="code" href="group__macros.html#gafd2dac36bad5ee2dcabe0fc520cb56de">XLKIT_BEGIN_FUNCTION</a></div>
-<div class="line">    <a class="code" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">xlResultOperandPtr</a> result;</div>
-<div class="line">    result-&gt;set(diameter * 3.14159);</div>
-<div class="line">    <span class="keywordflow">return</span> result;</div>
-<div class="line">    <a class="code" href="group__macros.html#ga5dd19d673fadf4005c0c22a8275958e6">XLKIT_END_FUNCTION</a></div>
-<div class="line">}</div>
-<div class="line"><span class="comment">// Register the function with a different function name in Excel</span></div>
-<div class="line"><a name="a5"></a><a class="code" href="group__macros.html#gaea2ea76c50f469f9d9a87ecdc7954ac9">XLKIT_REGISTER_AS</a>(<span class="stringliteral">&quot;xlCirc2&quot;</span>, xlCircWithoutHelp, <span class="stringliteral">&quot;Circumference of circle&quot;</span>)</div>
+<div class="line"><a name="a3"></a><a class="code" href="group__macros.html#gaf36e4b338360ea733a813dff3714b5b0">XLKIT_REGISTER</a>(xlCirc, <span class="stringliteral">&quot;Compute circle circumference&quot;</span>)</div>
 <div class="line"></div>
 <div class="line"></div>
 <div class="line"><span class="comment">//</span></div>
-<div class="line"><span class="comment">// xlStats example. This takes an iput rectangular range of cells and outputs</span></div>
-<div class="line"><span class="comment">// an 1x2 cell range of the mean and variance. Use CTRL+SHIFT+ENTER in the</span></div>
-<div class="line"><span class="comment">// formula field to set the output cell range to your cell selection.</span></div>
+<div class="line"><span class="comment">// Example to input and output cell arrays</span></div>
 <div class="line"><span class="comment">//</span></div>
 <div class="line"></div>
-<div class="line"><a class="code" href="group__macros.html#ga8c0e5cc3a5cb8f7d6c3a9d0193bdf359">XLKIT_PARM</a>(const <a class="code" href="group__aliases.html#ga7c761c71b49da3d91873150210b8a1ee">xlOperand</a>*, DataRange, &quot;Cell range of data&quot;)</div>
+<div class="line"><span class="comment">// Set up help to be used for parms that is displayed in Excel&#39;s Function</span></div>
+<div class="line"><span class="comment">// Wizard. In concept, the example XLKIT_PARM() below expands to:</span></div>
+<div class="line"><span class="comment">//</span></div>
+<div class="line"><span class="comment">//  typedef xlParm&lt;const xlOperand*, &quot;Cell range of numbers&quot;&gt; Diameter;</span></div>
+<div class="line"><span class="comment">//</span></div>
+<div class="line"><a name="a4"></a><a class="code" href="group__macros.html#ga8c0e5cc3a5cb8f7d6c3a9d0193bdf359">XLKIT_PARM</a>(const <a class="code" href="group__aliases.html#ga7c761c71b49da3d91873150210b8a1ee">xlOperand</a>*, DataRange, &quot;Cell range of numbers&quot;)</div>
 <div class="line"></div>
-<div class="line"><a class="code" href="group__macros.html#ga22f05100ebd892237b434154d2205ef4">XLKIT_EXPORT</a> xlOperand*</div>
+<div class="line"><span class="comment">// To return a cell, which can be any type, return an xlOperand*.</span></div>
+<div class="line"><span class="comment">// In this example, we input rectangular range of cells and output</span></div>
+<div class="line"><span class="comment">// an 1x2 cell range of the mean and variance.</span></div>
+<div class="line"><span class="comment">// NOTE: Use CTRL+SHIFT+ENTER in the formula field to set the output cell</span></div>
+<div class="line"><span class="comment">//       range to your cell selection.</span></div>
+<div class="line">xlOperand* <a class="code" href="group__macros.html#ga06b437451f78e10f3b12c1b5b9fc44d6">XLKIT_API</a></div>
 <div class="line">xlStats(xlParmDataRange cells)</div>
 <div class="line">{</div>
 <div class="line">    <a class="code" href="group__macros.html#gafd2dac36bad5ee2dcabe0fc520cb56de">XLKIT_BEGIN_FUNCTION</a></div>
 <div class="line"></div>
+<div class="line">    <span class="comment">// All xlOperand* return values must be an xlResultOperandPtr which</span></div>
+<div class="line">    <span class="comment">// represents a pointer to a thread-local copy of an xlOperand for return</span></div>
+<div class="line">    <span class="comment">// to Excel.</span></div>
 <div class="line">    <a class="code" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">xlResultOperandPtr</a> result;</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordtype">double</span> sum = 0.0;</div>
@@ -222,7 +204,7 @@ $(document).ready(function(){initNavTree('xlkitExample_8cpp-example.html','');})
 <div class="line">    <span class="comment">// Avoid divide by zero</span></div>
 <div class="line">    <span class="keywordtype">int</span> num_items = src.rows() * src.cols();</div>
 <div class="line">    <span class="keywordflow">if</span> (num_items == 0)</div>
-<div class="line">        <a name="a6"></a><a class="code" href="xlException_8hpp.html#a364ff98ce9fdf5f1d14e504401115bb3">XLKIT_THROW</a>(<span class="stringliteral">&quot;Can&#39;t calculate stats on empty range&quot;</span>);</div>
+<div class="line">        <a name="a5"></a><a class="code" href="xlException_8hpp.html#a364ff98ce9fdf5f1d14e504401115bb3">XLKIT_THROW</a>(<span class="stringliteral">&quot;Can&#39;t calculate stats on empty range&quot;</span>);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Create reference to an output results matrix of size 1x2</span></div>
 <div class="line">    <a class="code" href="group__aliases.html#gab6c0d30046ed9a503dcaef0a80308e80">xlCellMatrixRef</a> mat(result-&gt;setMatrix(1, 2));</div>
@@ -233,7 +215,7 @@ $(document).ready(function(){initNavTree('xlkitExample_8cpp-example.html','');})
 <div class="line"></div>
 <div class="line">    <span class="keywordflow">return</span> result;</div>
 <div class="line"></div>
-<div class="line">    <a class="code" href="group__macros.html#ga5dd19d673fadf4005c0c22a8275958e6">XLKIT_END_FUNCTION</a></div>
+<div class="line">    <a class="code" href="group__macros.html#gad39b49cebaed3956ae025cda567ce0b6">XLKIT_END_FUNCTION</a>(<a class="code" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">xlResultOperandPtr</a>)</div>
 <div class="line">}</div>
 <div class="line"><a class="code" href="group__macros.html#gaf36e4b338360ea733a813dff3714b5b0">XLKIT_REGISTER</a>(xlStats, <span class="stringliteral">&quot;Compute mean and variance as 1x2 cell range&quot;</span>)</div>
 <div class="line"></div>
@@ -242,7 +224,7 @@ $(document).ready(function(){initNavTree('xlkitExample_8cpp-example.html','');})
 <div class="line"><span class="comment">// Use CTRL+SHIFT+ENTER in the formula field to set the output cell range to</span></div>
 <div class="line"><span class="comment">// your cell selection.</span></div>
 <div class="line"><span class="comment">//</span></div>
-<div class="line"><a class="code" href="group__macros.html#ga22f05100ebd892237b434154d2205ef4">XLKIT_EXPORT</a> xlOperand*</div>
+<div class="line">xlOperand* <a class="code" href="group__macros.html#ga06b437451f78e10f3b12c1b5b9fc44d6">XLKIT_API</a></div>
 <div class="line">xlMatrixRef(xlParmDataRange cells)</div>
 <div class="line">{</div>
 <div class="line">    <a class="code" href="group__macros.html#gafd2dac36bad5ee2dcabe0fc520cb56de">XLKIT_BEGIN_FUNCTION</a></div>
@@ -251,7 +233,7 @@ $(document).ready(function(){initNavTree('xlkitExample_8cpp-example.html','');})
 <div class="line">    result-&gt;set(cells.value()-&gt;get&lt;<a class="code" href="group__aliases.html#ga0372688d9ede775ff2db7ff1c5751a34">xlConstCellMatrixRef</a>&gt;());</div>
 <div class="line">    <span class="keywordflow">return</span> result;</div>
 <div class="line"></div>
-<div class="line">    <a class="code" href="group__macros.html#ga5dd19d673fadf4005c0c22a8275958e6">XLKIT_END_FUNCTION</a></div>
+<div class="line">    <a class="code" href="group__macros.html#gad39b49cebaed3956ae025cda567ce0b6">XLKIT_END_FUNCTION</a>(<a class="code" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">xlResultOperandPtr</a>)</div>
 <div class="line">}</div>
 <div class="line"><a class="code" href="group__macros.html#gaf36e4b338360ea733a813dff3714b5b0">XLKIT_REGISTER</a>(xlMatrixRef, <span class="stringliteral">&quot;Reference a cell range&quot;</span>)</div>
 </div><!-- fragment --> </div><!-- contents -->
@@ -259,7 +241,7 @@ $(document).ready(function(){initNavTree('xlkitExample_8cpp-example.html','');})
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Apr 27 2014 12:51:14 for XLKit by
+    <li class="footer">Generated on Tue Apr 29 2014 00:36:54 for XLKit by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

@@ -121,55 +121,72 @@ Macros</h2></td></tr>
 <tr class="memitem:gaea2ea76c50f469f9d9a87ecdc7954ac9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macros.html#gaea2ea76c50f469f9d9a87ecdc7954ac9">XLKIT_REGISTER_AS</a>(XLNAME, FUNC, HELP)</td></tr>
 <tr class="memdesc:gaea2ea76c50f469f9d9a87ecdc7954ac9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to register the given function with xlkit with a different name from the C++ function name.  <a href="#gaea2ea76c50f469f9d9a87ecdc7954ac9">More...</a><br /></td></tr>
 <tr class="separator:gaea2ea76c50f469f9d9a87ecdc7954ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga22f05100ebd892237b434154d2205ef4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga22f05100ebd892237b434154d2205ef4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macros.html#ga22f05100ebd892237b434154d2205ef4">XLKIT_EXPORT</a>&#160;&#160;&#160;extern &quot;C&quot; __declspec(dllexport)</td></tr>
-<tr class="memdesc:ga22f05100ebd892237b434154d2205ef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">All registered functions must have this. <br /></td></tr>
-<tr class="separator:ga22f05100ebd892237b434154d2205ef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafd2dac36bad5ee2dcabe0fc520cb56de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafd2dac36bad5ee2dcabe0fc520cb56de"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macros.html#gafd2dac36bad5ee2dcabe0fc520cb56de">XLKIT_BEGIN_FUNCTION</a>&#160;&#160;&#160;try { \</td></tr>
-<tr class="memdesc:gafd2dac36bad5ee2dcabe0fc520cb56de"><td class="mdescLeft">&#160;</td><td class="mdescRight">All Excel functions begin with this macro. <br /></td></tr>
+<tr class="memitem:ga06b437451f78e10f3b12c1b5b9fc44d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga06b437451f78e10f3b12c1b5b9fc44d6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macros.html#ga06b437451f78e10f3b12c1b5b9fc44d6">XLKIT_API</a>&#160;&#160;&#160;__stdcall</td></tr>
+<tr class="memdesc:ga06b437451f78e10f3b12c1b5b9fc44d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">All registered functions must have this calling convention. <br /></td></tr>
+<tr class="separator:ga06b437451f78e10f3b12c1b5b9fc44d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa0282a0f99bd539c621a24c8426af393"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa0282a0f99bd539c621a24c8426af393"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macros.html#gaa0282a0f99bd539c621a24c8426af393">XLKIT_PRAGMA_DLL_EXPORT</a>&#160;&#160;&#160;__pragma(comment(linker, &quot;/EXPORT:&quot; __FUNCTION__ &quot;=&quot; __FUNCDNAME__))</td></tr>
+<tr class="memdesc:gaa0282a0f99bd539c621a24c8426af393"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to export the enclosed function for Excel to use. <br /></td></tr>
+<tr class="separator:gaa0282a0f99bd539c621a24c8426af393"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd2dac36bad5ee2dcabe0fc520cb56de"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macros.html#gafd2dac36bad5ee2dcabe0fc520cb56de">XLKIT_BEGIN_FUNCTION</a></td></tr>
+<tr class="memdesc:gafd2dac36bad5ee2dcabe0fc520cb56de"><td class="mdescLeft">&#160;</td><td class="mdescRight">All Excel functions begin with this macro.  <a href="#gafd2dac36bad5ee2dcabe0fc520cb56de">More...</a><br /></td></tr>
 <tr class="separator:gafd2dac36bad5ee2dcabe0fc520cb56de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5dd19d673fadf4005c0c22a8275958e6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macros.html#ga5dd19d673fadf4005c0c22a8275958e6">XLKIT_END_FUNCTION</a></td></tr>
-<tr class="memdesc:ga5dd19d673fadf4005c0c22a8275958e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">All Excel functions end with this macro.  <a href="#ga5dd19d673fadf4005c0c22a8275958e6">More...</a><br /></td></tr>
-<tr class="separator:ga5dd19d673fadf4005c0c22a8275958e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad39b49cebaed3956ae025cda567ce0b6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macros.html#gad39b49cebaed3956ae025cda567ce0b6">XLKIT_END_FUNCTION</a>(RESULT_T)</td></tr>
+<tr class="memdesc:gad39b49cebaed3956ae025cda567ce0b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">All Excel functions end with this macro.  <a href="#gad39b49cebaed3956ae025cda567ce0b6">More...</a><br /></td></tr>
+<tr class="separator:gad39b49cebaed3956ae025cda567ce0b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Macros for interfacing with Excel. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga5dd19d673fadf4005c0c22a8275958e6"></a>
+<a class="anchor" id="gafd2dac36bad5ee2dcabe0fc520cb56de"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define XLKIT_BEGIN_FUNCTION</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">XLKIT_PRAGMA_DLL_EXPORT \</div>
+<div class="line">            try { \</div>
+</div><!-- fragment -->
+<p>All Excel functions begin with this macro. </p>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a1">xlkitExample.cpp</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="gad39b49cebaed3956ae025cda567ce0b6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">#define XLKIT_END_FUNCTION</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">RESULT_T</td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">} <span class="keywordflow">catch</span> (xlkit::xlException&amp; err) { <a class="code" href="xldebug_8hpp.html#a9c2b66096c88ebcbb63bc0428748bb45">\</a></div>
 <div class="line"><a class="code" href="xldebug_8hpp.html#a9c2b66096c88ebcbb63bc0428748bb45">				XLDBG</a>(<span class="stringliteral">&quot;Exception caught: %s&quot;</span>, err.what()); \</div>
-<div class="line">                return 0; \</div>
+<div class="line">                return xlkit::detail::ErrorResult&lt;RESULT_T&gt;::value(); \</div>
 <div class="line">            } <span class="keywordflow">catch</span> (std::exception&amp; err){ <a class="code" href="xldebug_8hpp.html#a9c2b66096c88ebcbb63bc0428748bb45">\</a></div>
-<div class="line"><a class="code" href="xldebug_8hpp.html#a9c2b66096c88ebcbb63bc0428748bb45">				XLDBG</a>(<span class="stringliteral">&quot;Exception caught: %s&quot;</span>, err.what()); <a class="code" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">\</a></div>
-<div class="line"><a class="code" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">				xlResultOperandPtr</a> result; \</div>
-<div class="line">                result-&gt;set(err.what()); \</div>
-<div class="line">                return result; \</div>
+<div class="line"><a class="code" href="xldebug_8hpp.html#a9c2b66096c88ebcbb63bc0428748bb45">				XLDBG</a>(<span class="stringliteral">&quot;Exception caught: %s&quot;</span>, err.what()); \</div>
+<div class="line">                return xlkit::detail::ErrorResult&lt;RESULT_T&gt;::value(err.what()); \</div>
 <div class="line">            } <span class="keywordflow">catch</span> (xlkit::xlError&amp; err){ <a class="code" href="xldebug_8hpp.html#a9c2b66096c88ebcbb63bc0428748bb45">\</a></div>
-<div class="line"><a class="code" href="xldebug_8hpp.html#a9c2b66096c88ebcbb63bc0428748bb45">				XLDBG</a>(<span class="stringliteral">&quot;Exception caught: %s&quot;</span>, err.str().c_str()); <a class="code" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">\</a></div>
-<div class="line"><a class="code" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">				xlResultOperandPtr</a> result; \</div>
-<div class="line">                result-&gt;set(err); \</div>
-<div class="line">                return result; \</div>
+<div class="line"><a class="code" href="xldebug_8hpp.html#a9c2b66096c88ebcbb63bc0428748bb45">				XLDBG</a>(<span class="stringliteral">&quot;Exception caught: %s&quot;</span>, err.str().c_str()); \</div>
+<div class="line">                return xlkit::detail::ErrorResult&lt;RESULT_T&gt;::value(err); \</div>
 <div class="line">            } <span class="keywordflow">catch</span> (...) { <a class="code" href="xldebug_8hpp.html#a9c2b66096c88ebcbb63bc0428748bb45">\</a></div>
-<div class="line"><a class="code" href="xldebug_8hpp.html#a9c2b66096c88ebcbb63bc0428748bb45">				XLDBG</a>(<span class="stringliteral">&quot;Unknown exception caught&quot;</span>); <a class="code" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">\</a></div>
-<div class="line"><a class="code" href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">				xlResultOperandPtr</a> result; \</div>
-<div class="line">                result-&gt;set(xlkit::xlError(xlerrValue)); \</div>
-<div class="line">                return result; \</div>
+<div class="line"><a class="code" href="xldebug_8hpp.html#a9c2b66096c88ebcbb63bc0428748bb45">				XLDBG</a>(<span class="stringliteral">&quot;Unknown exception caught&quot;</span>); \</div>
+<div class="line">                return xlkit::detail::ErrorResult&lt;RESULT_T&gt;::value(); \</div>
 <div class="line">            } \</div>
-<div class="ttc" id="group__aliases_html_ga47c8bd280d2a0f545231c26e68ddeee8"><div class="ttname"><a href="group__aliases.html#ga47c8bd280d2a0f545231c26e68ddeee8">xlResultOperandPtr</a></div><div class="ttdeci">xlkit::ResultOperandPtr xlResultOperandPtr</div><div class="ttdoc">Return value for XLL functions. See xlResultOperandPtr. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:359</div></div>
 <div class="ttc" id="xldebug_8hpp_html_a9c2b66096c88ebcbb63bc0428748bb45"><div class="ttname"><a href="xldebug_8hpp.html#a9c2b66096c88ebcbb63bc0428748bb45">XLDBG</a></div><div class="ttdeci">#define XLDBG(FORMAT,...)</div><div class="ttdoc">Provides a printf style debug output. When run inside Visual Studio, it will print to the Output wind...</div><div class="ttdef"><b>Definition:</b> xldebug.hpp:85</div></div>
 </div><!-- fragment -->
 <p>All Excel functions end with this macro. </p>
 <dl class="section note"><dt>Note</dt><dd>Return 0 will be interpreted by Excel as #NULL!. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a3">xlkitExample.cpp</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a2">xlkitExample.cpp</a>.</dd>
 </dl>
 </div>
 </div>
@@ -238,11 +255,11 @@ Macros</h2></td></tr>
 <div class="line">            } } } \</div>
 <div class="line">            typedef <a class="code" href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm&lt;VALUE_TYPE, HELP_FOR_##NAME&gt;</a> <a class="code" href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm</a>##NAME;</div>
 <div class="ttc" id="group__other__macros_html_ga111c752d539aa6c1d4584821e9904e2c"><div class="ttname"><a href="group__other__macros.html#ga111c752d539aa6c1d4584821e9904e2c">XLKIT_VERSION_NAME</a></div><div class="ttdeci">#define XLKIT_VERSION_NAME</div><div class="ttdoc">Version namespace for this library. </div><div class="ttdef"><b>Definition:</b> xlversion.hpp:33</div></div>
-<div class="ttc" id="group__aliases_html_gab1fbf3ee7632337ca08ca95cc66c5923"><div class="ttname"><a href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm</a></div><div class="ttdeci">xlkit::Parm&lt; T, PARM_HELP &gt; xlParm</div><div class="ttdoc">An xlkit function parameter of type T, with optional help for convenience. See Parm. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:355</div></div>
+<div class="ttc" id="group__aliases_html_gab1fbf3ee7632337ca08ca95cc66c5923"><div class="ttname"><a href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm</a></div><div class="ttdeci">xlkit::Parm&lt; T, PARM_HELP &gt; xlParm</div><div class="ttdoc">An xlkit function parameter of type T, with optional help for convenience. See Parm. </div><div class="ttdef"><b>Definition:</b> xlkit.hpp:375</div></div>
 </div><!-- fragment -->
 <p>Macro to create <code>xlParm&lt;NAME&gt;</code> typedef as <code>xlParm&lt;VALUE_TYPE, HELP&gt;</code> proxy type for a variable of VALUE_TYPE. </p>
 <div class="fragment"><div class="line"><span class="keyword">typedef</span> of @pre <a class="code" href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm&lt;VALUE_TYPE, HELP&gt;</a> <a class="code" href="group__aliases.html#gab1fbf3ee7632337ca08ca95cc66c5923">xlParm</a>\#\#NAME </div>
-</div><!-- fragment --> <dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a0">xlkitExample.cpp</a>.</dd>
+</div><!-- fragment --> <dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a4">xlkitExample.cpp</a>.</dd>
 </dl>
 </div>
 </div>
@@ -277,7 +294,7 @@ Macros</h2></td></tr>
 <div class="line">            static FUNC##Registrar the##FUNC##Registrar; \</div>
 </div><!-- fragment -->
 <p>Macro to register the given function with xlkit. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a4">xlkitExample.cpp</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a3">xlkitExample.cpp</a>.</dd>
 </dl>
 </div>
 </div>
@@ -318,8 +335,7 @@ Macros</h2></td></tr>
 <div class="line">            static FUNC##Registrar the##FUNC##Registrar; \</div>
 </div><!-- fragment -->
 <p>Macro to register the given function with xlkit with a different name from the C++ function name. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="xlkitExample_8cpp-example.html#a5">xlkitExample.cpp</a>.</dd>
-</dl>
+
 </div>
 </div>
 </div><!-- contents -->
@@ -327,7 +343,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Apr 27 2014 12:51:15 for XLKit by
+    <li class="footer">Generated on Tue Apr 29 2014 00:36:54 for XLKit by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>
