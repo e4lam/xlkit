@@ -37,22 +37,20 @@ Once you have the necessary set up, to write your XLL is simple. Here's the simp
 XLKIT_INIT_ADDIN_LABEL("XLKit Test Addin")
 
 // Define a function that can be used from Excel.
-// It needs to be defined as XLKIT_EXPORT and return an xlOperand* whose
-// return value is an xlResultOperandPtr object.
-// Supported parameter types are: double, int, const char*, xlOperand*
-XLKIT_EXPORT xlOperand*
+// It needs to use the XLKIT_API calling convention
+// Supported return/parameter types are: double, int, const char*, xlOperand*
+double XLKIT_API
 xlCirc(double diameter)
 {
-	// Start a try block around the code
+	// Export this function to the DLL and start a try block around the code
 	XLKIT_BEGIN_FUNCTION
 
 	// Code for the function
-	xlResultOperandPtr result;
-	result->set(diameter * 3.14159);
-	return result;
+	return diameter * 3.14159;
 
-	// End the try block with default catch clauses
-	XLKIT_END_FUNCTION		
+	// End the try block with default catch clauses and give it the return type
+	// to have sensible return values when exceptions are caught.
+	XLKIT_END_FUNCTION(double)
 }
 
 // Register it with Excel

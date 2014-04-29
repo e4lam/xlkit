@@ -82,68 +82,50 @@ For more information, please refer to <http://unlicense.org>
 // Simplest example of an Excel function to create.
 //
 
-// Set up help to be used for parms that is displayed in Excel's Function
-// Wizard. In concept, the example XLKIT_PARM() below expands to:
-//
-//	typedef xlParm<double, "Diameter of a circle"> Diameter;
-//
-XLKIT_PARM(double, Diameter, "Diameter of a circle")
-
-// Write your function, declared with XLKIT_EXPORT to return an xlOperand*
-XLKIT_EXPORT xlOperand*
-xlCirc(xlParmDiameter diameter)
+// Write your function, using the XLKIT_API calling convention
+double XLKIT_API
+xlCirc(double diameter)
 {
-	// The function contents are enclosed by XLKIT_BEGIN_FUNCTION /
-	// XLKIT_END_FUNCTION macros to catch and handle exceptions.
+	// Being the function with the XLKIT_BEGIN_FUNCTION macro to export this
+	// function to the DLL and to start a try block.
 	XLKIT_BEGIN_FUNCTION
 
-	// All return values must be an xlResultOperand which represents a pointer
-	// to a thread-local copy of an xlOperand for return to Excel.
-	xlResultOperandPtr result;
+	return diameter * 3.14159;
 
-	// Actual code for the function. Use .get() to for the underlying value of
-	// the xlParm.
-	result->set(diameter.value() * 3.14159);
-
-	// Return the result.
-	return result;
-
-	XLKIT_END_FUNCTION	// End the function with this macro
+	// End the function with XLKIT_END_FUNCTION(return_type). The return type
+	// allows it to return something reasonable under error conditions.
+	XLKIT_END_FUNCTION(double)
 }
 
 // Register your function for the XLL
-XLKIT_REGISTER(xlCirc, "Circumference of circle")
-
-
-// Alternatively, you can just use double (or int) directly. But, then there
-// will be no help for it in Excel's Function Wizard.
-XLKIT_EXPORT xlOperand*
-xlCircWithoutHelp(double diameter)
-{
-	XLKIT_BEGIN_FUNCTION
-	xlResultOperandPtr result;
-	result->set(diameter * 3.14159);
-	return result;
-	XLKIT_END_FUNCTION
-}
-// Register the function with a different function name in Excel
-XLKIT_REGISTER_AS("xlCirc2", xlCircWithoutHelp, "Circumference of circle")
+XLKIT_REGISTER(xlCirc, "Compute circle circumference")
 
 
 //////////////////////////////////////////////////////////////////////////////
 //
-// xlStats example. This takes an iput rectangular range of cells and outputs
-// an 1x2 cell range of the mean and variance. Use CTRL+SHIFT+ENTER in the
-// formula field to set the output cell range to your cell selection.
+// Example to input and output cell arrays
 //
 
-XLKIT_PARM(const xlOperand*, DataRange, "Cell range of data")
+// Set up help to be used for parms that is displayed in Excel's Function
+// Wizard. In concept, the example XLKIT_PARM() below expands to:
+//
+//	typedef xlParm<const xlOperand*, "Cell range of numbers"> Diameter;
+//
+XLKIT_PARM(const xlOperand*, DataRange, "Cell range of numbers")
 
-XLKIT_EXPORT xlOperand*
+// To return a cell, which can be any type, return an xlOperand*.
+// In this example, we input rectangular range of cells and output
+// an 1x2 cell range of the mean and variance.
+// NOTE: Use CTRL+SHIFT+ENTER in the formula field to set the output cell
+//       range to your cell selection.
+xlOperand* XLKIT_API
 xlStats(xlParmDataRange cells)
 {
 	XLKIT_BEGIN_FUNCTION
 
+	// All xlOperand* return values must be an xlResultOperandPtr which
+	// represents a pointer to a thread-local copy of an xlOperand for return
+	// to Excel.
 	xlResultOperandPtr result;
 
 	double sum = 0.0;
@@ -175,7 +157,7 @@ xlStats(xlParmDataRange cells)
 
 	return result;
 
-	XLKIT_END_FUNCTION
+	XLKIT_END_FUNCTION(xlResultOperandPtr)
 }
 XLKIT_REGISTER(xlStats, "Compute mean and variance as 1x2 cell range")
 
@@ -185,7 +167,7 @@ XLKIT_REGISTER(xlStats, "Compute mean and variance as 1x2 cell range")
 // Use CTRL+SHIFT+ENTER in the formula field to set the output cell range to
 // your cell selection.
 //
-XLKIT_EXPORT xlOperand*
+xlOperand* XLKIT_API
 xlMatrixRef(xlParmDataRange cells)
 {
 	XLKIT_BEGIN_FUNCTION
@@ -194,6 +176,6 @@ xlMatrixRef(xlParmDataRange cells)
 	result->set(cells.value()->get<xlConstCellMatrixRef>());
 	return result;
 
-	XLKIT_END_FUNCTION
+	XLKIT_END_FUNCTION(xlResultOperandPtr)
 }
 XLKIT_REGISTER(xlMatrixRef, "Reference a cell range")

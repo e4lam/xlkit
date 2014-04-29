@@ -28,9 +28,10 @@
 
 #include <xlkit/xlversion.hpp>
 
+#include <string>
+
 #include <stdio.h>
 #include <stdarg.h>
-#include <string>
 
 namespace xlkit {
 XLKIT_USE_VERSION_NAMESPACE

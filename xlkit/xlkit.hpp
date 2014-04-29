@@ -107,6 +107,28 @@ XLKIT_TYPEINFO(ResultOperandPtr,	'P', "Cell or Cell Range")
 
 #undef XLKIT_TYPEINFO
 
+// Error result for type T
+template <typename T>
+struct ErrorResult {
+	static T value() {
+		return T(0);
+	}
+	template <typename S>
+	static T value(S s)	{
+		return T(0);
+	}
+};
+template <>
+struct ErrorResult<ResultOperandPtr> {
+	static ResultOperandPtr value() {
+		return ResultOperandPtr();
+	}
+	template <typename S>
+	static ResultOperandPtr value(S s) {
+		return ResultOperandPtr(xlOperand(s));
+	}
+};
+
 // Label for type T, defaults to nothing for unknown types.
 template <typename T>
 struct ParmHelp {
@@ -176,8 +198,6 @@ struct TypeInfo< Parm<T, PARM_HELP> > {
 		return help;
 	}
 };
-
-class ExcelHost;
 
 } // namespace detail
 
@@ -261,7 +281,7 @@ class Registry {
 	template <typename F>
 	Wrapper
 	makeWrapper(const std::string&name, F f, const char* func_help,
-				typename boost::enable_if< ft::is_nonmember_callable_builtin<F, ft::cdecl_cc>
+				typename boost::enable_if< ft::is_nonmember_callable_builtin<F, ft::stdcall_cc>
 				>::type *dummy = 0) {
 
 		typedef Func<F> FuncT;
@@ -413,35 +433,34 @@ typedef xlkit::ResultOperandPtr xlResultOperandPtr;
 			static FUNC##Registrar the##FUNC##Registrar; \
 			/**/
 
-/// All registered functions must have this
-#define XLKIT_EXPORT	extern "C" __declspec(dllexport)
+/// All registered functions must have this calling convention
+#define XLKIT_API	__stdcall
+
+/// Macro to export the enclosed function for Excel to use
+#define XLKIT_PRAGMA_DLL_EXPORT \
+			__pragma(comment(linker, "/EXPORT:" __FUNCTION__ "=" __FUNCDNAME__))
 
 /// All Excel functions begin with this macro
 #define XLKIT_BEGIN_FUNCTION \
+			XLKIT_PRAGMA_DLL_EXPORT \
 			try { \
 			/**/
 
 /// All Excel functions end with this macro
 /// @note Return 0 will be interpreted by Excel as \#NULL!.
-#define XLKIT_END_FUNCTION \
+#define XLKIT_END_FUNCTION(RESULT_T) \
 			} catch (xlkit::xlException& err) { \
 				XLDBG("Exception caught: %s", err.what()); \
-				return 0; \
+				return xlkit::detail::ErrorResult<RESULT_T>::value(); \
 			} catch (std::exception& err){ \
 				XLDBG("Exception caught: %s", err.what()); \
-				xlResultOperandPtr result; \
-				result->set(err.what()); \
-				return result; \
+				return xlkit::detail::ErrorResult<RESULT_T>::value(err.what()); \
 			} catch (xlkit::xlError& err){ \
 				XLDBG("Exception caught: %s", err.str().c_str()); \
-				xlResultOperandPtr result; \
-				result->set(err); \
-				return result; \
+				return xlkit::detail::ErrorResult<RESULT_T>::value(err); \
 			} catch (...) { \
 				XLDBG("Unknown exception caught"); \
-				xlResultOperandPtr result; \
-				result->set(xlkit::xlError(xlerrValue)); \
-				return result; \
+				return xlkit::detail::ErrorResult<RESULT_T>::value(); \
 			} \
 			/**/
 

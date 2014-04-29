@@ -331,15 +331,15 @@ ExcelHost* ExcelHost::theInstance = NULL;
 __declspec(thread) static XLOPER theTLSOperand;
 ResultOperandPtr::ResultOperandPtr()
 	: myOperand(detail::xlOperandCast(&theTLSOperand)) {
-	// Reset it
-	theTLSOperand.xltype = xltypeMissing;
-	theTLSOperand.val.num = 0;;
+	// Reset it to default error
+	theTLSOperand.xltype = xltypeErr;
+	theTLSOperand.val.err = xlerrValue;
 }
 ResultOperandPtr::ResultOperandPtr(const xlOperand& copy)
 	: myOperand(detail::xlOperandCast(&theTLSOperand)) {
-	// Reset it
-	theTLSOperand.xltype = xltypeMissing;
-	theTLSOperand.val.num = 0;;
+	// Reset it to default error
+	theTLSOperand.xltype = xltypeErr;
+	theTLSOperand.val.err = xlerrValue;
 	// Copy
 	*myOperand = copy;
 }
@@ -358,105 +358,103 @@ Registry::setAddinLabel(const char* label) {
 } // namespace xlkit
 
 
-// Force export of functions required by Excel so that for msvc we don't need
-// to use a def file. The number after the @ sign is the number of bytes for
-// the sum of all parameters and return value.
-#pragma comment (linker, "/export:_xlAddInManagerInfo=_xlAddInManagerInfo@4")
-#pragma comment (linker, "/export:_xlAutoOpen=_xlAutoOpen@0")
-#pragma comment (linker, "/export:_xlAutoClose=_xlAutoClose@0")
-#pragma comment (linker, "/export:_xlAutoRemove=_xlAutoRemove@0")
-#pragma comment (linker, "/export:_xlAutoFree=_xlAutoFree@4")
+//
+// Define public entry points for .xll
+//
 
-// Define entry points for .xll
-extern "C" {
+LPXLOPER WINAPI
+xlAddInManagerInfo(LPXLOPER xAction) {
 
-	LPXLOPER WINAPI
-	xlAddInManagerInfo(LPXLOPER xAction) {
+	XLKIT_PRAGMA_DLL_EXPORT
 
-		using namespace xlkit;
-		using namespace xlkit::detail;
+	using namespace xlkit;
+	using namespace xlkit::detail;
 
-		ResultOperandPtr result;
-		result->set(xlError(xlerrValue));
+	ResultOperandPtr result; // default value is error
 
-		try {
-			if (xlOperandCast(xAction)->get<int>() == 1)
-				result->set(ExcelHost::instance().addinLabel());
-		} catch(std::exception &err) {
-			XLDBG("Exception caught: %s", err.what());
-		} catch(...) {
-			XLDBG("Unknown EXCEPTION!");
+	try {
+		if (xlOperandCast(xAction)->get<int>() == 1)
+			result->set(ExcelHost::instance().addinLabel());
+	} catch(std::exception &err) {
+		XLDBG("Exception caught: %s", err.what());
+	} catch(...) {
+		XLDBG("Unknown EXCEPTION!");
+	}
+
+	return xloperCast(result);
+}
+
+int WINAPI
+xlAutoOpen() {
+
+	XLKIT_PRAGMA_DLL_EXPORT
+
+	using namespace xlkit::detail;
+
+	try {
+		// Register our hooks
+		ExcelHost::instance().attach();
+		XLDBG("Opened.");
+	} catch(std::exception &err) {
+		XLDBG("Exception caught: %s", err.what());
+	} catch(...) {
+		XLDBG("Unknown EXCEPTION!");
+	}
+	return 1; // must return 1
+}
+
+static bool theAutoRemoveCalled = false;
+
+int WINAPI
+xlAutoClose() {
+
+	XLKIT_PRAGMA_DLL_EXPORT
+
+	using namespace xlkit::detail;
+
+	try {
+
+		if (theAutoRemoveCalled) {
+			// we can safely unregister the functions here as the user has
+			// unloaded the xll and so won't expect to be able to use the
+			// functions
+			ExcelHost::instance().detach();
+		} else {
+			// note that we don't unregister the functions here
+			// excel has some strange behaviour when exiting and can
+			// call xlAutoClose before the user has been asked about the close
 		}
 
-		return xloperCast(result);
+		XLDBG("Closed.");
+	} catch(std::exception &err) {
+		XLDBG("Exception caught: %s", err.what());
+	} catch(...) {
+		XLDBG("Unknown EXCEPTION!");
 	}
+	return 1; // must return 1
+}
 
-	int WINAPI
-	xlAutoOpen() {
+int WINAPI
+xlAutoRemove() {
 
-		using namespace xlkit::detail;
+	XLKIT_PRAGMA_DLL_EXPORT
 
-		try {
-			// Register our hooks
-			ExcelHost::instance().attach();
-			XLDBG("Opened.");
-		} catch(std::exception &err) {
-			XLDBG("Exception caught: %s", err.what());
-		} catch(...) {
-			XLDBG("Unknown EXCEPTION!");
-		}
-		return 1; // must return 1
+	try {
+		// tell auto close we've been called so that we can call deregister
+		theAutoRemoveCalled = true;
+		XLDBG("Removed.");
+	} catch(std::exception &err) {
+		XLDBG("Exception caught: %s", err.what());
+	} catch(...) {
+		XLDBG("Unknown EXCEPTION!");
 	}
+	return 1; // must return 1
+}
 
-	static bool theAutoRemoveCalled = false;
-
-	int WINAPI
-	xlAutoClose() {
-
-		using namespace xlkit::detail;
-
-		try {
-
-			if (theAutoRemoveCalled) {
-				// we can safely unregister the functions here as the user has
-				// unloaded the xll and so won't expect to be able to use the
-				// functions
-				ExcelHost::instance().detach();
-			} else {
-				// note that we don't unregister the functions here
-				// excel has some strange behaviour when exiting and can
-				// call xlAutoClose before the user has been asked about the close
-			}
-
-			XLDBG("Closed.");
-		} catch(std::exception &err) {
-			XLDBG("Exception caught: %s", err.what());
-		} catch(...) {
-			XLDBG("Unknown EXCEPTION!");
-		}
-		return 1; // must return 1
-	}
-
-	int WINAPI
-	xlAutoRemove() {
-
-		try {
-			// tell auto close we've been called so that we can call deregister
-			theAutoRemoveCalled = true;
-			XLDBG("Removed.");
-		} catch(std::exception &err) {
-			XLDBG("Exception caught: %s", err.what());
-		} catch(...) {
-			XLDBG("Unknown EXCEPTION!");
-		}
-		return 1; // must return 1
-	}
-
-	void WINAPI
-	xlAutoFree(LPXLOPER pxFree) {
-		using namespace xlkit::detail;
-		xlOperandCast(pxFree)->reset();
-	}
-
-} // extern "C"
+void WINAPI
+xlAutoFree(LPXLOPER pxFree) {
+	XLKIT_PRAGMA_DLL_EXPORT
+	using namespace xlkit::detail;
+	xlOperandCast(pxFree)->reset();
+}
 
