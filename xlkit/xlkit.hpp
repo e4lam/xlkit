@@ -280,9 +280,8 @@ class Registry {
 	// Make a wrapper object for function F
 	template <typename F>
 	Wrapper
-	makeWrapper(const std::string&name, F f, const char* func_help,
-				typename boost::enable_if< ft::is_nonmember_callable_builtin<F, ft::stdcall_cc>
-				>::type *dummy = 0) {
+	makeWrapper(const std::string&name, F f, const char* func_help) {
+	 
 
 		typedef Func<F> FuncT;
 
