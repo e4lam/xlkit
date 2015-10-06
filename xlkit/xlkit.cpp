@@ -157,7 +157,7 @@ class ExcelHost {
 
 			// pxArgumentHelp...
 			const std::vector<std::string>& helps = it.second.myParmHelp;
-			for (int j = 0, n = helps.size(); j < n; ++j) {
+			for (int j = 0, n = int(helps.size()); j < n; ++j) {
 				// See http://msdn.microsoft.com/en-us/library/bb687841.aspx
 				// for _Argument Description String Truncation in the
 				// Function Wizard_ for why we need to do this.  In
@@ -268,9 +268,9 @@ class ExcelHost {
 					  "Operand has the wrong size!");
 		std::vector<LPXLOPER> parms;
 		parms.reserve(args.size());
-		for (int i = 0, n = args.size(); i < n; i++)
+		for (int i = 0, n = int(args.size()); i < n; i++)
 			parms.push_back(const_cast<LPXLOPER>(xloperCast(&args[i])));
-		int xlret = Excel4v_(xlfn, xloperCast(&result), parms.size(), parms.data());
+		int xlret = Excel4v_(xlfn, xloperCast(&result), int(parms.size()), parms.data());
 #ifdef _DEBUG
 		if (xlret != xlretSuccess) {
 			XLDBG("callV %s %d with %d args", xlfn_type, xlfn & 0x0FFF, args.size());
@@ -376,7 +376,7 @@ xlAddInManagerInfo(LPXLOPER xAction) {
 		if (xlOperandCast(xAction)->get<int>() == 1)
 			result->set(ExcelHost::instance().addinLabel());
 	} catch(std::exception &err) {
-		XLDBG("Exception caught: %s", err.what());
+		XLDBG_EXCEPT(err);
 	} catch(...) {
 		XLDBG("Unknown EXCEPTION!");
 	}
@@ -396,7 +396,7 @@ xlAutoOpen() {
 		ExcelHost::instance().attach();
 		XLDBG("Opened.");
 	} catch(std::exception &err) {
-		XLDBG("Exception caught: %s", err.what());
+		XLDBG_EXCEPT(err);
 	} catch(...) {
 		XLDBG("Unknown EXCEPTION!");
 	}
@@ -427,7 +427,7 @@ xlAutoClose() {
 
 		XLDBG("Closed.");
 	} catch(std::exception &err) {
-		XLDBG("Exception caught: %s", err.what());
+		XLDBG_EXCEPT(err);
 	} catch(...) {
 		XLDBG("Unknown EXCEPTION!");
 	}
@@ -444,7 +444,7 @@ xlAutoRemove() {
 		theAutoRemoveCalled = true;
 		XLDBG("Removed.");
 	} catch(std::exception &err) {
-		XLDBG("Exception caught: %s", err.what());
+		XLDBG_EXCEPT(err);
 	} catch(...) {
 		XLDBG("Unknown EXCEPTION!");
 	}

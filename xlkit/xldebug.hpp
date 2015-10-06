@@ -63,12 +63,21 @@ debugMsgS(const char* file, int n, const char* func, const std::string& msg) {
 	return debugMsg(file, n, func, "%s", msg.c_str());
 }
 inline void
-debugOut(const char* file, int n, const char* func, const char *fmt, ...) {
+debugOut(const char* file, int n, const char* func, const char* fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 	std::string msg = debugMsgV(file, n, func, fmt, args);
 	va_end(args);
 	detail::outputDebugString(msg.c_str());
+}
+
+inline void
+debugExcept(const char* file, int n, const char* func, const char* what) {
+	debugOut(file, n, func, "Exception caught: %s", what);
+}
+inline void
+debugExcept(const char* file, int n, const char* func, const std::string& what) {
+	debugOut(file, n, func, "Exception caught: %s", what.c_str());
 }
 
 } // namespace detail
@@ -83,6 +92,14 @@ debugOut(const char* file, int n, const char* func, const char *fmt, ...) {
 				/**/
 #else
 #define XLDBG(FORMAT, ...)
+#endif
+
+/// @def XLDBG_EXCEPT
+/// Provides simple debugging output for std::exception's
+#ifdef _DEBUG
+#define XLDBG_EXCEPT(EX) xlkit::detail::debugExcept(__FILE__, __LINE__, __FUNCTION__, (EX).what())
+#else
+#define XLDBG_EXCEPT(EX) ((void)(EX))
 #endif
 
 } // namespace XLKIT_VERSION_NAME

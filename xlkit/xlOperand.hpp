@@ -81,6 +81,11 @@ struct xlError {
 			return std::string("xlerrGettingData");
 		return boost::lexical_cast<std::string>(num);
 	}
+	/// Compatible name for XLDBG_EXCEPT() macro
+	std::string what() const {
+		return str();
+	}
+
 	int num;
 };
 

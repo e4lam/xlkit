@@ -31,7 +31,7 @@
 #include <xlkit/xlOperand.hpp>
 #include <xlkit/xlversion.hpp>
 
-#define BOOST_FT_AUTODETECT_CALLING_CONVENTIONS
+#define BOOST_FT_CC_STDCALL callable_builtin
 #include <boost/function_types/components.hpp>
 #include <boost/function_types/is_nonmember_callable_builtin.hpp>
 
@@ -234,7 +234,7 @@ class Registry {
 	void dump() {
 		for (const auto& i : myFunctions) {
 			printf("'%s' -> '%s' [", i.first.c_str(), i.second.myTypes.c_str());
-			for (int j = 0, n = i.second.myParmHelp.size(); j < n; ++j) {
+			for (int j = 0, n = int(i.second.myParmHelp.size()); j < n; ++j) {
 				if (j > 0)
 					printf(",");
 				printf("%s", i.second.myParmHelp[j].c_str());
@@ -450,13 +450,13 @@ typedef xlkit::ResultOperandPtr xlResultOperandPtr;
 /// @note Return 0 will be interpreted by Excel as \#NULL!.
 #define XLKIT_END_FUNCTION(RESULT_T) \
 			} catch (xlkit::xlException& err) { \
-				XLDBG("Exception caught: %s", err.what()); \
+				XLDBG_EXCEPT(err); \
 				return xlkit::detail::ErrorResult<RESULT_T>::value(); \
 			} catch (std::exception& err){ \
-				XLDBG("Exception caught: %s", err.what()); \
+				XLDBG_EXCEPT(err); \
 				return xlkit::detail::ErrorResult<RESULT_T>::value(err.what()); \
 			} catch (xlkit::xlError& err){ \
-				XLDBG("Exception caught: %s", err.str().c_str()); \
+				XLDBG_EXCEPT(err); \
 				return xlkit::detail::ErrorResult<RESULT_T>::value(err); \
 			} catch (...) { \
 				XLDBG("Unknown exception caught"); \
