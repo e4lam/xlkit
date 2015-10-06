@@ -1,6 +1,8 @@
 Debug
 Release
-*.suo
+ipch
+*.ncb
 *.opensdf
 *.sdf
+*.suo
 *.xll
