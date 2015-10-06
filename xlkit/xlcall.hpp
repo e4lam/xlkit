@@ -68,7 +68,7 @@ struct xlPOINT {
 #define POINT		xlkit::detail::xlPOINT
 #endif
 
-#include <XLCALL.H>
+#include <xlkit/XLCALL.H>
 
 // Undo defines that were used just to get XLCALL.H included properly
 #ifdef XLCALL_HPP_WINDEFS
